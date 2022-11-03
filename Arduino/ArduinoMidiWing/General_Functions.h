@@ -1,7 +1,7 @@
 /*
-		 Functions Header File
-		 Version: V1.2
-		 Changelog: Fixed fader fluctuations, better value mapping for correction
+	Functions Header File
+	Version: V1.2
+	Changelog: Fixed fader fluctuations, better value mapping for correction
 */
 
 // FUNCTION DECLARATIONS
@@ -28,9 +28,19 @@ void led_feedback_update(byte i);
 
 // ---------- MIDIUSB UTILITY FUNCTIONS ----------
 void noteOn(byte channel, byte pitch, byte velocity) {
-	MidiUSB.sendMIDI(event);
+	midiEventPacket_t noteOn = {0x09, 0x90 | channel, pitch, velocity};
+	MidiUSB.sendMIDI(noteOn);
 }
 
+void noteOff(byte channel, byte pitch, byte velocity) {
+	midiEventPacket_t noteOff = {0x08, 0x80 | channel, pitch, velocity};
+	MidiUSB.sendMIDI(noteOff);
+}
+
+void controlChange(byte channel, byte control, byte value) {
+	midiEventPacket_t event = {0x0B, 0xB0 | channel, control, value};
+	MidiUSB.sendMIDI(event);
+}
 // ----------  POWER ON ----------
 void power_on() {
 	while (!power) {
