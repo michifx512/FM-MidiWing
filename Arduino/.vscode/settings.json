@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "*.extension": ".ino",
+        "*.ino": "arduino-output",
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "cstddef": "cpp"
+    },
+    "cmake.configureOnOpen": false,
+    //"C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0}",
+    //"C_Cpp.clang_format_fallbackStyle": "LLVM",
+    //"C_Cpp.clang_format_fallbackStyle": "WebKit",
+    "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: LLVM, UseTab: Always, IndentWidth: 4, TabWidth: 4, BreakBeforeBraces: Attach, AllowShortIfStatementsOnASingleLine: false, IndentCaseLabels: true, ColumnLimit: 0, AccessModifierOffset: -4 }",
+    "editor.formatOnSave": true
+}
