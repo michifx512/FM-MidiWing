@@ -41,6 +41,7 @@ void controlChange(byte channel, byte control, byte value) {
 	midiEventPacket_t event = {0x0B, 0xB0 | channel, control, value};
 	MidiUSB.sendMIDI(event);
 }
+
 // ----------  POWER ON ----------
 void power_on() {
 	while (!power) {
@@ -106,6 +107,7 @@ void mode_button() {
 		for (byte r = 0; r < SETUPROWS; r++) {
 			pinMode(ROWPINS[r], OUTPUT);
 			digitalWrite(ROWPINS[r], LOW);
+			for (byte c = 0; c < SETUPCOLS; c++) {
 				setup_state[r][c] = !digitalRead(COLPINS[c]);
 				if (setup_state[r][c] != setup_state_pre[r][c]) {
 					setup_state_pre[r][c] = setup_state[r][c];
@@ -131,6 +133,9 @@ void mode_button() {
 	}
 }
 
+void setupchanged(byte r, byte c) {
+	if (r == 0) {
+		if (c < 5) // midi channel has changed
 			midi_channel = c;
 		else if (c == 5 || c == 6) // CC/NOTE boolean has changed
 			fader_output_note = c - 5;
@@ -260,6 +265,7 @@ void sleepmode() {
 void readmatrix() {
 	for (byte r = 0; r < NROWS; r++) {
 		pinMode(ROWPINS[r], OUTPUT);
+		digitalWrite(ROWPINS[r], LOW);
 		for (byte c = 0; c < NCOLS; c++)
 			keystate[r][c] = !digitalRead(COLPINS[c]);
 		pinMode(ROWPINS[r], INPUT); // Sets the row back to high impedance
@@ -303,6 +309,8 @@ void readfaders() {
 
 		faderval_7bit[i] = faderval_10bit[i] / 8;
 	}
+}
+
 // ---------- MIDI OUT COMMANDS ----------
 void fader_out() {
 	for (byte i = 0; i < NFADERS; i++) {
