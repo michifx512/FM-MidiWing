@@ -13,4 +13,3 @@
     - Fully external (midi with velocity mapped to color)
     - Hybrid ( midi velocity only controls the brightness of some predefined colors)
     - Fully internal
-  
