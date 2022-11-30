@@ -17,6 +17,7 @@
 
 ## TO-DO LIST
  - [ ] Test Fader Correction with ESP32 12bit ADC
+    - [ ] Test Magnet on fader with esp for measure
  - [ ] Physical mods:
     - [ ] Add ESP32 alongside Teensy 4.1
       - [ ] Make them communicate with each other
