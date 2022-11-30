@@ -23,9 +23,10 @@
     - [ ] Connect Faders to ESP32
     - [ ] Connect WS2812B to ESP32
     - [ ] [optional] Add 6pin DIN for External Device
+
  - [ ] Code Mods:
    - [ ] Communication between Teensy 4.1 and ESP32 
-   - [ ] \b Better Fader correction with 12bit ADC
+   - [ ] ** Better _Fader correction_ with 12bit ADC **
    - [ ] Better WS2812B management
    - [ ] ESP32 WebServer Interface for WS2812B Feedback
    - [ ] MIDI via BLE with ESP32
