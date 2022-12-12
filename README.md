@@ -16,6 +16,9 @@
 
 
 ## TO-DO LIST
+
+CORREZIONE: Splitta a metà il valore del potenziometro e applica una curva esponenziale o logaritmica
+
  - [ ] Test Fader Correction with ESP32 12bit ADC
     - [ ] Test Magnet on fader with esp for measure
  - [ ] Physical mods:
