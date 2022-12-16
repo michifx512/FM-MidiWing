@@ -18,7 +18,7 @@ void setup() {
 	pin_setup();
 	FastLED_InitialSetup();
 	power_on();
-	Serial.begin(9600);
+	//Serial.begin(9600);
 	FastLED.clear();
 	FastLED.show();
 }
