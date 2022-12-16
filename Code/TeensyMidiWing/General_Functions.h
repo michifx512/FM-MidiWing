@@ -1,7 +1,7 @@
 /*
 	Functions Header File
-	Version: V2.0
-	Changelog: Changed Fader Value Correction Engine
+	Version: V2.1
+	Changelog: Changed Fader Value Correction Engine, fixed small fluctuation algorithm
 */
 
 // FUNCTION DECLARATIONS
@@ -304,27 +304,27 @@ void readfaders() {
     smoothed[i] = (alpha)*smoothed[i] + (1 - alpha) * value[i];
     faderval_10bit[i] = int(smoothed[i]);
 
-
-    if (faderval_10bit[i] == faderval_10bit_pre[i] + 1)
-      faderval_10bit[i]--;
-    else if (faderval_10bit[i] == faderval_10bit_pre[i] - 1)
-      faderval_10bit[i]++;
-    if (faderval_10bit[i] == faderval_10bit_pre[i] + 2)
-      faderval_10bit[i] -= 2;
-    else if (faderval_10bit[i] == faderval_10bit_pre[i] - 2)
-      faderval_10bit[i] += 2;
-    faderval_10bit_pre[i] = faderval_10bit[i];
-
-    /*
-		smoothed_b[i] = (alpha)*smoothed_b[i] + (1 - alpha) * faderval_10bit[i];
-		faderval_10bit[i] = int(smoothed_b[i]);*/
-
     //NEW CORRECTION
     //Serial.print("Raw value [");Serial.print(i);Serial.print("]:");Serial.println(faderval_10bit[i]);
     faderval_10bit[i] = correctFader(faderval_10bit[i]);
     //Serial.print("CORR value [");Serial.print(i);Serial.print("]:");Serial.println(faderval_10bit[i]);Serial.println();
     //Serial.print(faderval_10bit[i]);Serial.print("\t");
-    faderval_7bit[i] = faderval_10bit[i] / 8;
+
+    if (abs(faderval_10bit[i] - faderval_10bit_pre[i]) < 2  && faderval_10bit[i] > 3 && faderval_10bit[i] < 1020) {
+      faderval_10bit[i] = faderval_10bit_pre[i];
+    }
+    faderval_10bit_pre[i] = faderval_10bit[i];
+
+    /*
+		smoothed_b[i] = (alpha)*smoothed_b[i] + (1 - alpha) * faderval_10bit[i];
+		faderval_10bit[i] = int(smoothed_b[i]);
+    */
+    if(faderval_10bit[i]<=512){
+      faderval_7bit[i] = faderval_10bit[i] / 8;
+    }else{
+      faderval_7bit[i] = (float)faderval_10bit[i] / 8 + 0.5;
+    }
+    
   }
   Serial.println();
 }

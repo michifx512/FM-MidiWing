@@ -2,7 +2,7 @@
   Project Name: FM-MidiWing 
   Second Name (old): Teensy USB-MIDI CONTROLLER
   Author: EFF Service - Francesco Michieletto
-  Version: V2.0
+  Version: V2.1
 */
 
 // Libraries

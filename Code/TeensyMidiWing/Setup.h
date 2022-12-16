@@ -1,6 +1,6 @@
 /*
   Setup & Settings Header File
-  Version: V2.0
+  Version: V2.1
 */
 
 // ---------- CONSTANTS ----------
