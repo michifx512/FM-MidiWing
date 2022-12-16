@@ -17,8 +17,11 @@
 
 ## TO-DO LIST
 
-CORREZIONE: Splitta a metà il valore del potenziometro e applica una curva esponenziale o logaritmica
-
+ - [x] CORREZIONE: Splitta a metà il valore del potenziometro e applica una curva esponenziale o logaritmica
+    - [ ] da controllare e perfezionare bene
+ - [ ] aggiunta EEPROM ( maybe con esp32 )
+ - [ ] "bootloader" mode, spegnimento della comunicazione tra teensy e esp per permettere upload codice
+ 
  - [ ] Test Fader Correction with ESP32 12bit ADC
     - [ ] Test Magnet on fader with esp for measure
  - [ ] Physical mods:
