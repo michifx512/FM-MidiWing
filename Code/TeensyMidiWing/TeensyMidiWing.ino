@@ -2,7 +2,7 @@
   Project Name: FM-MidiWing 
   Second Name (old): Teensy USB-MIDI CONTROLLER
   Author: EFF Service - Francesco Michieletto
-  Version: V1.2
+  Version: V2.0
 */
 
 // Libraries
@@ -18,7 +18,7 @@ void setup() {
 	pin_setup();
 	FastLED_InitialSetup();
 	power_on();
-	//Serial.begin(9600);
+	Serial.begin(9600);
 	FastLED.clear();
 	FastLED.show();
 }

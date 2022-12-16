@@ -1,6 +1,6 @@
 /*
   Setup & Settings Header File
-  Version: V1.2
+  Version: V2.0
 */
 
 // ---------- CONSTANTS ----------
@@ -66,7 +66,7 @@ byte faderval_7bit_pre[NFADERS] = {0};
 float value[NFADERS] = {0};
 float smoothed[NFADERS] = {0};
 float smoothed_b[NFADERS] = {0};
-float alpha = 0.92;
+float alpha = 0.93;
 
 // MIDI
 byte note[NROWS][NCOLS] = {
