@@ -66,7 +66,7 @@ byte faderval_7bit_pre[NFADERS] = {0};
 float value[NFADERS] = {0};
 float smoothed[NFADERS] = {0};
 float smoothed_b[NFADERS] = {0};
-float alpha = 0.93;
+float alpha = 0.95;
 
 // MIDI
 byte note[NROWS][NCOLS] = {

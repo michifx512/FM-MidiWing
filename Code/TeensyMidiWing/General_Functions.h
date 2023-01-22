@@ -307,7 +307,7 @@ void readfaders() {
     //Serial.print("CORR value [");Serial.print(i);Serial.print("]:");Serial.println(faderval_10bit[i]);Serial.println();
     //Serial.print(faderval_10bit[i]);Serial.print("\t");
 
-    if (abs(faderval_10bit[i] - faderval_10bit_pre[i]) < 2 && faderval_10bit[i] > 3 && faderval_10bit[i] < 1020) {
+    if (abs(faderval_10bit[i] - faderval_10bit_pre[i]) < 10 && faderval_10bit[i] > 3 && faderval_10bit[i] < 1020) {
       faderval_10bit[i] = faderval_10bit_pre[i];
     }
     faderval_10bit_pre[i] = faderval_10bit[i];
