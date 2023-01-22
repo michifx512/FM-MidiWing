@@ -30,7 +30,7 @@ const byte ROWPINS[NROWS] = {5, 4, 3, 2};
 const byte COLPINS[NCOLS] = {32, 31, 30, 29, 28, 33, 34, 35, 36, 37, 10, 9, 8, 7, 6};
 
 bool show = false;
-
+bool sleeping=false;
 // ---------- VARIABLES ----------
 
 // SETUP VARIABLES
@@ -49,7 +49,7 @@ byte led_brightness = 255;
 bool setup_state[SETUPROWS][SETUPCOLS];
 bool setup_state_pre[SETUPROWS][SETUPCOLS];
 
-int lastpress = 0; // used with millis() for sleep mode
+long lastpress = 0; // used with millis() for sleep mode
 
 // READINGS VARIABLES
 bool keystate[NROWS][NCOLS] = {0}; // matrix

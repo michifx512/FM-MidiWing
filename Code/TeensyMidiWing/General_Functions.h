@@ -126,7 +126,7 @@ void mode_button() {
     FastLED.clear();
     lastpress = millis();
   }
-  if (!show) {
+  if (!show && !sleeping) {
     for (byte i = 0; i < NUM_LEDS; i++)
       led_feedback_update(i);
     show = true;
@@ -245,25 +245,22 @@ void vegasmode() {
 }
 
 void sleepmode() {
-  /*
-			if(millis() - lastpress >= 10000){ // 300000 =  5 min
-					show = false;
-					FastLED.clear();
+  const byte fade_k = 12;
+  if (millis() - lastpress >= 300000) {  // 300000 =  5 min
+    show = false;
+    sleeping=true;
+    //FastLED.clear();
 
-					for(byte i=255; i>0; i--){
-							leds[random(0,NUM_LEDS)] = CHSV(0, 255, i);
-							leds[random(0,NUM_LEDS)] = CHSV(0, 255, i-50);
-							leds[random(0,NUM_LEDS)] = CHSV(0, 255, i-100);
-							leds[random(0,NUM_LEDS)] = CHSV(0, 255, i-150);
-							leds[random(0,NUM_LEDS)] = CHSV(0, 255, i-200);
-							leds[random(0,NUM_LEDS)] = CHSV(0, 255, i-250);
-							FastLED.show();
-							delay(5);
-					}
-			}else{
-					show = true;
-			}
-			*/
+    EVERY_N_MILLISECONDS(20 * fade_k) {
+      leds[random(NUM_LEDS)] = CHSV(random8() / 10 + 125, 255, 255);
+    }
+    EVERY_N_MILLISECONDS(fade_k) {
+      fadeToBlackBy(leds, NUM_LEDS, 1);
+    }
+    FastLED.show();
+  }else{
+    sleeping=false;
+  }
 }
 
 // ---------- READ FUNCTIONS ----------
@@ -274,7 +271,7 @@ void readmatrix() {
     for (byte c = 0; c < NCOLS; c++)
       keystate[r][c] = !digitalRead(COLPINS[c]);
     pinMode(ROWPINS[r], INPUT);  // Sets the row back to high impedance
-    delayMicroseconds(10);
+    delayMicroseconds(15);
   }
   fl_state = !digitalRead(FOOTSW_PINL);
   fr_state = !digitalRead(FOOTSW_PINR);
@@ -310,7 +307,7 @@ void readfaders() {
     //Serial.print("CORR value [");Serial.print(i);Serial.print("]:");Serial.println(faderval_10bit[i]);Serial.println();
     //Serial.print(faderval_10bit[i]);Serial.print("\t");
 
-    if (abs(faderval_10bit[i] - faderval_10bit_pre[i]) < 2  && faderval_10bit[i] > 3 && faderval_10bit[i] < 1020) {
+    if (abs(faderval_10bit[i] - faderval_10bit_pre[i]) < 2 && faderval_10bit[i] > 3 && faderval_10bit[i] < 1020) {
       faderval_10bit[i] = faderval_10bit_pre[i];
     }
     faderval_10bit_pre[i] = faderval_10bit[i];
@@ -319,12 +316,11 @@ void readfaders() {
 		smoothed_b[i] = (alpha)*smoothed_b[i] + (1 - alpha) * faderval_10bit[i];
 		faderval_10bit[i] = int(smoothed_b[i]);
     */
-    if(faderval_10bit[i]<=512){
+    if (faderval_10bit[i] <= 512) {
       faderval_7bit[i] = faderval_10bit[i] / 8;
-    }else{
+    } else {
       faderval_7bit[i] = (float)faderval_10bit[i] / 8 + 0.5;
     }
-    
   }
   Serial.println();
 }
@@ -334,11 +330,12 @@ void fader_out() {
   for (byte i = 0; i < NFADERS; i++) {
     if (faderval_7bit[i] != faderval_7bit_pre[i]) {  // send only if value changed
       faderval_7bit_pre[i] = faderval_7bit[i];
-      if (fader_output_note == false)  // cc values need to be sent
+      if (fader_output_note == false)  // send CC values for Faders
         controlChange(midi_channel, i + 60, faderval_7bit[i]);
       else
         noteOn(midi_channel, i + 60, faderval_7bit[i]);
       MidiUSB.flush();
+      lastpress=millis();
     }
   }
 }
@@ -347,6 +344,7 @@ void button_out() {
   for (byte r = 0; r < NROWS; r++)
     for (byte c = 0; c < NCOLS; c++)
       if (keystate[r][c] != keystate_pre[r][c]) {  // send only if state changed
+        lastpress = millis();
         keystate_pre[r][c] = keystate[r][c];
         if (keystate[r][c])
           noteOn(midi_channel, note[r][c], 127);
@@ -392,7 +390,7 @@ void midi_in() {
             }
           } else if (rx.byte1 == 0x80)
             feedback_color[i] = 0;
-
+          if(sleeping) lastpress=millis();
           if (show) {
             led_feedback_update(i);
             FastLED.show();
