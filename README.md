@@ -1,6 +1,6 @@
 # FM-MidiWing
 
-#### My custom-built USB-MIDI Controller, made especially for lighing programming, with layout based on MA grandMA2, MA dot2, etc.
+#### My custom-built USB-MIDI Controller, made especially for lighing programming, with layout based on MA grandMA2, MA dot2 and other lighting consoles
 
 <p>
   <img src="photos/top 1.png" width="24%">
@@ -29,7 +29,7 @@
 - [ ] [optional] Add 6pin DIN for external device
 
 ### Code Mods:
-- [x] Better Fader Correction (my pots are some shitty ones from Aliexpress, they have a strange resistance curve, something like the "4B" graph: https://islproducts.com/wp-content/uploads/potentiometer-resistance-taper-b-series-table.png)
+- [x] Better Fader Correction (my pots are some cheap ones from Aliexpress, they have a strange resistance curve, something like the "4B" graph: https://islproducts.com/wp-content/uploads/potentiometer-resistance-taper-b-series-table.png)
 - [ ] Communication between Teensy 4.1 and ESP32 
 - [ ] Save Options on Flash
 - [ ] MultiCore Programming on Esp32
