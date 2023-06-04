@@ -15,20 +15,20 @@
 
 // ---------- SETUP and LOOP ----------
 void setup() {
-	pin_setup();
-	FastLED_InitialSetup();
-	power_on();
-	//Serial.begin(9600);
-	FastLED.clear();
-	FastLED.show();
+    pinSetup();
+    FastLED_InitialSetup();
+    powerOn();
+    //Serial.begin(9600);
+    FastLED.clear();
+    FastLED.show();
 }
 
 void loop() {
-	mode_button();
-	sleepmode();
-	readmatrix();
-	readfaders();
-	fader_out();
-	button_out();
-	midi_in();
+    setupPage();
+    sleepMode();
+    readMatrix();
+    readFaders();
+    buttonOut();
+    faderOut();
+    midiIn();
 }
